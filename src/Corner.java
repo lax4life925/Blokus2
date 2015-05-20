@@ -1,11 +1,11 @@
 
-public class Corner extends Triomino {
+public class Corner extends Piece {
 
-	public Corner(Player p) {
-		super(p);
+	public Corner(Player p,int x, int y) {
+		super(p,x,y);
 		// TODO Auto-generated constructor stub
-		blockOne.setRelativeLoc(0, 0);
-		blockTwo.setRelativeLoc(0, 1);
-		blockThree.setRelativeLoc(1, 0);
+		blockList.add(new Block(p.getColor(), this, 0, 0));
+		blockList.add(new Block(p.getColor(), this, 0, 1));
+		blockList.add(new Block(p.getColor(), this, 1, 0));
 	}
 }

@@ -1,12 +1,13 @@
 
-public class ThreeLong extends Triomino {
+public class ThreeLong extends Piece{
 
-	public ThreeLong(Player p) {
-		super(p);
+	public ThreeLong(Player p,int x, int y) {
+		super(p,x,y);
 		// TODO Auto-generated constructor stub
-		this.blockOne.setRelativeLoc(0, 0);
-		this.blockTwo.setRelativeLoc(1, 0);
-		this.blockThree.setRelativeLoc(2, 0);
+		blockList.add(new Block(p.getColor(), this, 0, 0));
+		blockList.add(new Block(p.getColor(), this, 1, 0));
+		blockList.add(new Block(p.getColor(), this, 2, 0));
+
 	}
 
 }

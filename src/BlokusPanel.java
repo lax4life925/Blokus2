@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 public class BlokusPanel extends JPanel{
 	BlokusBoard board;
-	private int GameTurn=0;
+	private int GameTurn=2;
 	Location firstClick;
 	Piece selectedP;
 	Block selectedB;
@@ -26,6 +26,7 @@ public class BlokusPanel extends JPanel{
 		this.addMouseListener(listen);
 		setPreferredSize(new Dimension(BlokusFrame.width,BlokusFrame.height));
 		board = new BlokusBoard(this);
+		test();
 	}
 
 	public void addAllPieces(){
@@ -38,18 +39,18 @@ public class BlokusPanel extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		board.draw(g);
-		System.out.println(Color.blue);
-		test(g);
+		for(Piece p :piecesAvailable)
+			p.draw(g);
+		
 	}
 
-	private void test(Graphics g) {
+	private void test() {
 		// TODO Auto-generated method stub
-		Piece p = new ThreeLong(new Player(Color.yellow,0));
-		p.setLoc(50, 50);
-		p.draw(g);
-		Piece p2 = new Corner(new Player(Color.red,1));
-		p2.setLoc(100, 100);
-		p2.draw(g);
+		Piece p = new ThreeLong(new Player(Color.yellow,0), 1000, 900);
+		Piece p2 = new Corner(new Player(Color.red,1), 800, 600);
+		piecesAvailable.add(p2);
+		piecesAvailable.add(p);
+
 	}
 
 
@@ -61,63 +62,19 @@ public class BlokusPanel extends JPanel{
 		// at least that's how I did collisions for space invaders...
 		// instead of grabPiece i changed to select piece, so that gives capability to rotate it on
 		// screen and select place the piece should go
-		if(GameTurn==0){
+		System.out.println("x : " + x + " y: " + y); 
 			for(Piece z: this.piecesAvailable){
-				if(z.getColor()==Color.blue){
 					for(Block v: z.blockList){
-						if((v.getScreenLoc().getX())<x&&x<(v.getScreenLoc().getX()+Block.SIZE) && (v.getScreenLoc().getY())<y&&y<(v.getScreenLoc().getY()+Block.SIZE)){
-							firstClick=new Location(x,y);
+						if(v.contains(x,y)){
+							System.out.println("got piece");
+							firstClick= new Location(x,y);
 							selectedB=v;
 							selectedP=z;
 							return true;
-					}
-					}
+						}
 				}
 			}
-		}
-		else if(GameTurn==1){
-			for(Piece z: this.piecesAvailable){
-				if(z.getColor()==Color.yellow){
-					for(Block v: z.blockList){
-						if((v.getScreenLoc().getX())<x&&x<(v.getScreenLoc().getX()+Block.SIZE) && (v.getScreenLoc().getY())<y&&y<(v.getScreenLoc().getY()+Block.SIZE)){
-						firstClick=new Location(x,y);
-						selectedB=v;
-						selectedP=z;
-						return true;
-					}
-					}
-				}
-			}
-		}
-		else if(GameTurn==2){
-			for(Piece z: this.piecesAvailable){
-				if(z.getColor()==Color.red){
-					for(Block v: z.blockList){
-						if((v.getScreenLoc().getX())<x&&x<(v.getScreenLoc().getX()+Block.SIZE) && (v.getScreenLoc().getY())<y&&y<(v.getScreenLoc().getY()+Block.SIZE)){
-						firstClick=new Location(x,y);
-						selectedB=v;
-						selectedP=z;
-						return true;
-					}
-					}
-				}
-			}
-		}
-		else if(GameTurn==3){
-			for(Piece z: this.piecesAvailable){
-				if(z.getColor()==Color.green){
-					for(Block v: z.blockList){
-						if((v.getScreenLoc().getX())<=x&&x<=(v.getScreenLoc().getX()+Block.SIZE) && (v.getScreenLoc().getY())<=y&&y<=(v.getScreenLoc().getY()+Block.SIZE)){
-						firstClick=new Location(x,y);
-						selectedP=z;
-						selectedB=v;
-						return true;
-					}
-					}
-				}
-			}
-		}
-		return false;
+			return false;
 	}
 
 	public boolean dropPiece(int x, int y){
@@ -125,18 +82,34 @@ public class BlokusPanel extends JPanel{
 		Location secondClkBrd = secondClick.convertToGrid();
 		int xn= secondClkBrd.getX();
 		int yn= secondClkBrd.getY();
-		for(Piece z: this.piecesUsed){
+		//if(board.validPlay(xn,yn,selectedB,selectedP))
+		
+		this.piecesUsed.add(selectedP);
+			for(Block block : selectedP.getBlockList())
+				board.add(block);
 			
-		}
-		
-		
+		boolean test = this.piecesAvailable.remove(selectedP);
+		System.out.print(test);
+		firstClick = null;
+		selectedP = null;
+		selectedB = null;
 		return false;
 	}
 
 
 	public boolean insideUsablePiece(int x, int y) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
+	}
+
+	public Block getSelectedBlock() {
+		// TODO Auto-generated method stub
+		return selectedB;
+	}
+
+	public Piece getSelectedPiece() {
+		// TODO Auto-generated method stub
+		return this.selectedP;
 	}
 
 

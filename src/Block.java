@@ -1,16 +1,21 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 
 public class Block {
 
-	public static final int SIZE = 25;
+	public static final int SIZE = 30;
 	private Color color;
 	private Location relativeLoc;
 	private Location screenLoc;
-	public Block(Color red) {
+	private Piece piece;
+	public Block(Color red,Piece p, int relX, int relY) {
 		// TODO Auto-generated constructor stub
+		piece = p;
 		color = red;
+		relativeLoc = new Location(relX,relY);
+		screenLoc = new Location(relX*Block.SIZE + p.getX(), relY*Block.SIZE + p.getY());
 	}
 
 	public Color getColor() {
@@ -32,6 +37,19 @@ public class Block {
 	
 	public Location getRelativeLoc(){
 		return relativeLoc;
+	}
+
+
+	public boolean contains(int x, int y) {
+		// TODO Auto-generated method stub
+		Rectangle rect = new Rectangle(screenLoc.getX(),screenLoc.getY(),SIZE,SIZE);
+		return rect.contains(x, y);
+			
+	}
+
+	public void setScreenLoc(Location screen) {
+		// TODO Auto-generated method stub
+		screenLoc = screen;
 	}
 	
 	

@@ -9,7 +9,9 @@ public abstract class Piece {
 	 Color color;
 	 int x;
 	 int y;
-	public Piece(Player p){
+	public Piece(Player p,int locX, int locY){
+		x = locX;
+		y = locY;
 		color = p.getColor();
 	}
 	
@@ -54,6 +56,25 @@ public abstract class Piece {
 
 	public static void fill(List<Piece> list, Player p) {
 		// TODO Auto-generated method stub
-		list.add(new Corner(p));
+	//	list.add(new Corner(p));
 		}
+
+	public List<Block> getBlockList() {
+		// TODO Auto-generated method stub
+		return blockList;
+	}
+
+	public void follow(int xx, int yy) {
+		// TODO Auto-generated method stub
+		x = xx;
+		y = yy;
+		resetBlocksLoc();
+	}
+
+	private void resetBlocksLoc() {
+		// TODO Auto-generated method stub
+		for(Block b: blockList){
+			b.setScreenLoc(b.getRelativeLoc().getX()*Block.SIZE + getX(), b.getRelativeLoc().getY()*Block.SIZE + getY());
+		}
+	}
 }
