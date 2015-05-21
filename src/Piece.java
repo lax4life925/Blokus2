@@ -24,6 +24,7 @@ public abstract class Piece {
 		for(Block b : blockList){
 			b.setRelativeLoc(b.getRelativeLoc().getX()*-1, b.getRelativeLoc().getY());
 		}
+		this.resetBlocksLoc();
 	}
 
 	public void draw(Graphics g) {

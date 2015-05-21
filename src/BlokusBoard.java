@@ -80,8 +80,8 @@ public class BlokusBoard {
 		Location loc = new Location(block.getScreenLoc().getX() + Block.SIZE/3,block.getScreenLoc().getY() + Block.SIZE/3).convertToGrid();
 		arr[loc.getX()][loc.getY()] = block;
 		block.setScreenLoc(loc.toScreen());
-		System.out.println("X: " + loc.getX());
-		System.out.println("Y: " + loc.getY());
+		//System.out.println("X: " + loc.getX());
+		//System.out.println("Y: " + loc.getY());
 		blokusPanel.repaint();
 
 	}

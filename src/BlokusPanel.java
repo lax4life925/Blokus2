@@ -24,9 +24,16 @@ public class BlokusPanel extends JPanel{
 	public BlokusPanel(){
 		super();
 		this.addMouseListener(listen);
+		addMouseMotionListener(listen);
 		setPreferredSize(new Dimension(BlokusFrame.width,BlokusFrame.height));
 		board = new BlokusBoard(this);
+		setUpTimer();
 		test();
+	}
+
+	private void setUpTimer() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public void addAllPieces(){
@@ -62,11 +69,11 @@ public class BlokusPanel extends JPanel{
 		// at least that's how I did collisions for space invaders...
 		// instead of grabPiece i changed to select piece, so that gives capability to rotate it on
 		// screen and select place the piece should go
-		System.out.println("x : " + x + " y: " + y); 
+		//System.out.println("x : " + x + " y: " + y); 
 			for(Piece z: this.piecesAvailable){
 					for(Block v: z.blockList){
 						if(v.contains(x,y)){
-							System.out.println("got piece");
+							//System.out.println("got piece");
 							firstClick= new Location(x,y);
 							selectedB=v;
 							selectedP=z;
@@ -89,7 +96,7 @@ public class BlokusPanel extends JPanel{
 				board.add(block);
 			
 		boolean test = this.piecesAvailable.remove(selectedP);
-		System.out.print(test);
+		//System.out.print(test);
 		firstClick = null;
 		selectedP = null;
 		selectedB = null;
